@@ -3,22 +3,26 @@ var primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61
 function binarySearch(ordered_list, target) {
   var min = 0;
   var max = primes.length - 1;
+  var guess_count = 0;
   var guess;
-  while (primes[guess] !== target) {
+  while (min <= max) {
     guess = Math.floor((min + max) / 2);
-    if (min > max) {
-      console.log(target + ' not in ordered list');
-      return -1;
-    } else if (primes[guess] < target) {
+    guess_count++;
+    if (ordered_list[guess] === target) {
+      console.log('Found ' + ordered_list[guess] + ' at index ' + guess);
+      console.log('Total guesses: ' + guess_count);
+      return guess;
+    } else if (ordered_list[guess] < target) {
       min = guess + 1;
-      console.log('Guess of ' + primes[guess] + ' was too low!');
-    } else if (primes[guess] > target) {
+      console.log('Guess of ' + ordered_list[guess] + ' was too low!');
+    } else if (ordered_list[guess] > target) {
       max = guess - 1;
-      console.log('Guess of ' + primes[guess] + ' was too high!');
+      console.log('Guess of ' + ordered_list[guess] + ' was too high!');
     }
   }
-  console.log('Found ' + primes[guess] + ' at index ' + guess);
-  return guess;
+  console.log(target + ' not in ordered list');
+  console.log('Total guesses: ' + guess_count);
+  return -1;
 }
 
 binarySearch(primes, 67);
